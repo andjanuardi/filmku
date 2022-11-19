@@ -35,9 +35,11 @@ export default function TabelFilm(param) {
         direction={"row"}
         sx={{ flexWrap: "wrap", justifyContent: "center" }}
       >
-        {param.dataFilm.length <= 0 && <LoadMedia />}
+        {typeof param.dataFilm !== "undefined" &&
+          param.dataFilm.length <= 0 && <LoadMedia />}
 
-        {typeof param.dataFilm.movie !== "undefined" &&
+        {typeof param.dataFilm !== "undefined" &&
+          typeof param.dataFilm.movie !== "undefined" &&
           param.dataFilm.movie.map((data, id) => (
             <Card
               key={id}
@@ -74,7 +76,8 @@ export default function TabelFilm(param) {
             </Card>
           ))}
       </Stack>
-      {typeof param.dataFilm.page !== "undefined" &&
+      {typeof param.dataFilm !== "undefined" &&
+        typeof param.dataFilm.page !== "undefined" &&
         param.dataFilm.page.last !== null && (
           <Stack spacing={2} alignItems={"center"}>
             <Pagination

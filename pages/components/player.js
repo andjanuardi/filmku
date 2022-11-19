@@ -69,6 +69,7 @@ export default function MediaPlayer(param) {
       ]
     );
   };
+
   useEffect(() => {
     getStreamLink(
       param.activePlayer.link.split("/")[
@@ -96,7 +97,8 @@ export default function MediaPlayer(param) {
               <CloseIcon />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              {param.activePlayer.title}
+              {typeof param.activePlayer !== "undefined" &&
+                param.activePlayer.title}
             </Typography>
           </Toolbar>
         </AppBar>
@@ -106,7 +108,10 @@ export default function MediaPlayer(param) {
             <CardMedia
               component="img"
               height="350px"
-              image={param.activePlayer.imgUrl}
+              image={
+                typeof param.activePlayer !== "undefined" &&
+                param.activePlayer.imgUrl
+              }
               alt="NO IMAGE"
             />
             <CardContent>
@@ -116,21 +121,34 @@ export default function MediaPlayer(param) {
                 component="div"
                 sx={{ fontWeight: "bold" }}
               >
-                {param.activePlayer.title}{" "}
-                <small>({param.activePlayer.year})</small>
+                {typeof param.activePlayer !== "undefined" &&
+                  param.activePlayer.title}{" "}
+                <small>
+                  (
+                  {typeof param.activePlayer !== "undefined" &&
+                    param.activePlayer.year}
+                  )
+                </small>
               </Typography>
-              {param.activePlayer.quality !== "" && (
-                <Chip
-                  size="small"
-                  color="success"
-                  label={param.activePlayer.quality}
-                  sx={{ marginRight: "5px" }}
-                />
-              )}
+              {typeof param.activePlayer !== "undefined" &&
+                param.activePlayer.quality !== "" && (
+                  <Chip
+                    size="small"
+                    color="success"
+                    label={
+                      typeof param.activePlayer !== "undefined" &&
+                      param.activePlayer.quality
+                    }
+                    sx={{ marginRight: "5px" }}
+                  />
+                )}
               <Chip
                 size="small"
                 color="warning"
-                label={param.activePlayer.rating}
+                label={
+                  typeof param.activePlayer !== "undefined" &&
+                  param.activePlayer.rating
+                }
               />
             </CardContent>
           </Card>

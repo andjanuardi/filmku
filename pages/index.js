@@ -136,15 +136,18 @@ export default function Home() {
     },
   };
 
-  const getDataFilm = async (page) => {
+  const getDataFilm = (page) => {
     setDataFilm([]);
 
-    await axios
-      .get(`/api/gm21/?d=movie&p=${page}`, config)
-      .then((res) => {
-        setDataFilm(res.data);
-      })
-      .catch(() => alert("Error : Kesalahan Server"));
+    async function getStaticProps() {
+      await axios
+        .get(`/api/gm21/?d=movie&p=${page}`, config)
+        .then((res) => {
+          setDataFilm(res.data);
+        })
+        .catch(() => alert("Error : Kesalahan Server"));
+    }
+    getStaticProps();
   };
 
   const cari = async (page, val) => {
