@@ -8,7 +8,7 @@ export default async function handler(req, res) {
       "Content-type": "application/json",
     },
   };
-  const url = "https://gudangmovies21.boats";
+  const url = "https://link.gudangmovies21.chat";
   let api_url = url;
   if (req.query.d === "movie") {
     if (typeof req.query.s !== "undefined") {
