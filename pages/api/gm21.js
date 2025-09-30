@@ -8,8 +8,30 @@ export default async function handler(req, res) {
       "Content-type": "application/json",
     },
   };
-  const url = "https://link.gudangmovies21.chat";
+
+  const configs = {
+    headers: {
+      accept:
+        "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+      "accept-language": "id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7",
+      "cache-control": "max-age=0",
+      priority: "u=0, i",
+      "sec-ch-ua": '"Not A(Brand";v="8", "Chromium";v="132"',
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": '"Chromium OS"',
+      "sec-fetch-dest": "document",
+      "sec-fetch-mode": "navigate",
+      "sec-fetch-site": "none",
+      "sec-fetch-user": "?1",
+      "upgrade-insecure-requests": "1",
+    },
+    referrerPolicy: "strict-origin-when-cross-origin",
+    body: null,
+    method: "GET",
+  };
+  const url = "https://tv32.gudangmovies21.chat";
   let api_url = url;
+
   if (req.query.d === "movie") {
     if (typeof req.query.s !== "undefined") {
       api_url = `${url}/page/${req.query.p}/?s=${req.query.s}`;
@@ -24,9 +46,10 @@ export default async function handler(req, res) {
       }
     }
     let result = [];
-    await axios(api_url, config)
+   await fetch(api_url, configs)
+      .then((res) => res.text())
       .then((res) => {
-        const $ = cheerio.load(res.data);
+        const $ = cheerio.load(res);
         let movie = [];
         let page = [];
         const selector = "div.items > div.item";
@@ -69,9 +92,11 @@ export default async function handler(req, res) {
 
   if (req.query.d === "category") {
     let result = [];
-    await axios(api_url, config)
+
+   await fetch(api_url, configs)
+      .then((res) => res.text())
       .then((res) => {
-        const $ = cheerio.load(res.data);
+        const $ = cheerio.load(res);
         const selector = "li.cat-item";
         $(selector).each((id, elem) => {
           const cat = $(elem).find("a").text();
@@ -90,9 +115,10 @@ export default async function handler(req, res) {
     if (typeof req.query.l !== "undefined") {
       api_url = `${url}/${req.query.l}`;
       let result = [];
-      await axios(api_url, config)
+      await fetch(api_url, configs)
+      .then((res) => res.text())
         .then((res) => {
-          const $ = cheerio.load(res.data);
+          const $ = cheerio.load(res);
 
           const selector = "div.entry-content";
           let link = $(selector).find("script").text();
